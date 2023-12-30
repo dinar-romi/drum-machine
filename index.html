@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: #555;
+      }
+
+      #drum-machine {
+        width: 500px;
+        height: fit-content;
+        background-color: #333;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        border: 2px solid red;
+      }
+
+      #display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        font-weight: 500;
+        width: 100%;
+        height: 72px;
+        background-color: #aaa;
+      }
+
+      #pad {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+      }
+
+      .drum-pad {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 500;
+        background-color: #777;
+        aspect-ratio: 1/1;
+        cursor: pointer;
+      }
+
+      .drum-pad:active {
+        background-color: yellow;
+      }
+    </style>
+    <title>Drum Machine</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="drum-machine">
+        <div id="display"></div>
+        <div id="pad">
+          <div id="Heater1" class="drum-pad"><audio class="clip" id="Q" src="./asset/Heater-1.mp3"></audio>Q</div>
+          <div id="Heater2" class="drum-pad"><audio class="clip" id="W" src="./asset/Heater-2.mp3"></audio>W</div>
+          <div id="Heater3" class="drum-pad"><audio class="clip" id="E" src="./asset/Heater-3.mp3"></audio>E</div>
+          <div id="Heater4" class="drum-pad"><audio class="clip" id="A" src="./asset/Heater-4.mp3"></audio>A</div>
+          <div id="Clap" class="drum-pad"><audio class="clip" id="S" src="./asset/Clap.mp3"></audio>S</div>
+          <div id="Open-HH" class="drum-pad"><audio class="clip" id="D" src="./asset//Open-HH.mp3"></audio>D</div>
+          <div id="Kick-n-Hat" class="drum-pad"><audio class="clip" id="Z" src="./asset/Kick_n_Hat.mp3"></audio>Z</div>
+          <div id="Kick" class="drum-pad"><audio class="clip" id="X" src="./asset/Kick.mp3"></audio>X</div>
+          <div id="Closed-HH" class="drum-pad"><audio class="clip" id="C" src="./asset/Closed-HH.mp3"></audio>C</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+
+    <script>
+      const drumPad = document.querySelectorAll(".drum-pad");
+      const display = document.getElementById("display");
+      const audios = Array.from(document.getElementsByTagName("audio"));
+
+      drumPad.forEach((pad) =>
+        pad.addEventListener("click", (e) => {
+          return e.target.firstChild.play();
+        })
+      );
+
+      drumPad.forEach((pad) => {
+        pad.addEventListener("click", (e) => {
+          return (display.innerText = e.target.getAttribute("id"));
+        });
+      });
+
+      document.addEventListener("keydown", (e) => {
+        const pressedKey = e.key.toUpperCase();
+        const x = audios.filter((audio) => audio.getAttribute("id") == pressedKey);
+        return x[0].play() && (display.innerText = x[0].parentElement.getAttribute("id"));
+
+        x[0].parentElement.style.backgroundColor = "yellow";
+      });
+    </script>
+  </body>
+</html>
